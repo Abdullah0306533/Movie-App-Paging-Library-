@@ -32,7 +32,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class MainActivity extends AppCompatActivity {
 
     private MovieViewModel mainActivityViewModel;
-    private ActivityMainBinding activityMainBinding;
+    private ActivityMainBinding binding;
     private MoviesAdapter moviesAdapter;
 
     @Inject
@@ -44,15 +44,10 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
 
         // Inflate the layout
-        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(activityMainBinding.getRoot());
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        // Handle window insets for edge-to-edge layout
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
 
         // Check API key validity
         if (Utils.API_KEY == null || Utils.API_KEY.isEmpty()) {
@@ -82,11 +77,11 @@ public class MainActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
 
         // Set LayoutManager and ItemDecoration
-        activityMainBinding.recyclerView.setLayoutManager(gridLayoutManager);
-        activityMainBinding.recyclerView.addItemDecoration(new GridSpace(2, 20, true));
+        binding.recyclerViewMovies.setLayoutManager(gridLayoutManager);
+        binding.recyclerViewMovies.addItemDecoration(new GridSpace(2, 20, true));
 
         // Set Adapter with LoadState footer
-        activityMainBinding.recyclerView.setAdapter(
+        binding.recyclerViewMovies.setAdapter(
                 moviesAdapter.withLoadStateFooter(
                         new MoviesLoadStateAdapter(view -> {
                             moviesAdapter.retry();
