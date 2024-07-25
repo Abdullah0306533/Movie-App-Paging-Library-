@@ -12,6 +12,7 @@ import com.example.movieapppaginglibrary.model.MovieResponse;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * PagingSource implementation for loading movie data from a remote source using RxJava3.
@@ -30,18 +31,19 @@ public class MoviePagingSource extends RxPagingSource<Integer, Movie> {
     public Single<LoadResult<Integer, Movie>> loadSingle(@NonNull LoadParams<Integer> loadParams) {
         try {
             // Determine the page number to load. Default to 0 if the key is null.
-            int page = loadParams.getKey() != null ? loadParams.getKey() : 0;
+            int page = loadParams.getKey() != null ? loadParams.getKey() : 1;
 
             // Make an API call to get movies by page, map the response to a list of movies,
             // and create a LoadResult object.
             return APiClient.getApiInterface()
                     .getMoviesByPage(page)
+                    .subscribeOn(Schedulers.io())
                     .map(MovieResponse::getMovies)
                     .map(movies -> toLoadResult(movies, page))
                     .onErrorReturn(LoadResult.Error::new); // Handle errors by returning a LoadResult.Error.
         } catch (Exception e) {
             // Return a LoadResult.Error if an exception occurs.
-            return Single.just(new LoadResult.Error<>(e));
+            return Single.just(new LoadResult.Error(e));
         }
     }
 

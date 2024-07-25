@@ -39,6 +39,7 @@ public class AppModule {
     public RequestManager getGlide(@ApplicationContext Context context) {
         return Glide.with(context)
                 .applyDefaultRequestOptions(new RequestOptions()
-                        .error(R.drawable.ic_image));
+                        .error(R.drawable.ic_image).placeholder(
+                                R.drawable.ic_image));
     }
 }

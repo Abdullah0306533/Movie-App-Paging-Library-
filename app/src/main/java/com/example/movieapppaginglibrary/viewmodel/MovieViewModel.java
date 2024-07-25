@@ -21,7 +21,7 @@ import kotlinx.coroutines.CoroutineScope;
 public class MovieViewModel extends ViewModel {
 
     // Flowable to hold paging data for movies
-    Flowable<PagingData<Movie>> moviePagingFlowable;
+    public Flowable<PagingData<Movie>> moviePagingDataFlowable;
 
     /**
      * Constructor for MovieViewModel.
@@ -56,7 +56,7 @@ public class MovieViewModel extends ViewModel {
 
         // Create a Flowable for PagingData.
         // Flowable is a type of reactive stream in RxJava that emits a series of data items.
-        moviePagingFlowable = PagingRx.getFlowable(pager);
+        moviePagingDataFlowable = PagingRx.getFlowable(pager);
 
         // Get CoroutineScope for the ViewModel.
         // CoroutineScope is used to manage the lifecycle of coroutines.
@@ -65,6 +65,6 @@ public class MovieViewModel extends ViewModel {
         // Cache the Flowable within the ViewModel's CoroutineScope.
         // Caching ensures that the data remains consistent and survives configuration changes,
         // such as screen rotations.
-        PagingRx.cachedIn(moviePagingFlowable, coroutineScope);
+        PagingRx.cachedIn(moviePagingDataFlowable, coroutineScope);
     }
 }

@@ -8,5 +8,5 @@ import retrofit2.http.Query;
 
 public interface Api {
     @GET("movies/popular")
-    Single<MovieResponse> getMoviesByPage(@Query("api_key") int page);
+    Single<MovieResponse> getMoviesByPage(@Query("page") int page);
 }

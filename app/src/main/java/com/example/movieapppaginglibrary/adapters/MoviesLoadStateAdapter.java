@@ -46,10 +46,10 @@ public class MoviesLoadStateAdapter extends LoadStateAdapter<MoviesLoadStateAdap
      * ViewHolder class to display load state (loading, error) views.
      */
     public static class LoadStateViewHolder extends RecyclerView.ViewHolder {
-        //final test
-        private final ProgressBar mProgressBar;
-        private final TextView mErrorMessage;
-        private final Button mRetry;
+
+        private  ProgressBar mProgressBar;
+        private  TextView mErrorMessage;
+        private  Button mRetry;
 
         /**
          * Constructor to initialize load state views.
